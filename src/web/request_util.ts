@@ -13,8 +13,8 @@
 // limitations under the License.
 
 
+import { BasicCredentials } from 'https://deno.land/x/authlete_deno@v1.2.6/mod.ts';
 import { Context } from 'https://deno.land/x/oak@v10.2.0/mod.ts';
-import { BasicCredentials } from '../../../authlete-deno/mod.ts';
 
 
 /**
