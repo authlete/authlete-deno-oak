@@ -8,7 +8,7 @@ oak (Deno) 用 Authlete ライブラリ
 をサポートする認可サーバーと、リソースサーバーを実装するためのユーティリティー部品群を提供します。
 
 このライブラリは、oak API と authlete-deno ライブラリを用いて書かれています。
-[oak][Oak] Deno 用の Web フレームワークの一つです。
+[oak][Oak] は Deno 用の Web フレームワークの一つです。
 一方、[authlete-deno][AuthleteDeno] は Authlete が提供するもう一つのオープンソースライブラリで、
 [Authlete Web API][AuthleteAPI] とやりとりするための基本部品群を含んでいます。
 
