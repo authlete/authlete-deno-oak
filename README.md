@@ -9,7 +9,7 @@ implement an authorization server which supports [OAuth 2.0][RFC6749] and
 [OpenID Connect][OIDC] and a resource server.
 
 This library is written using [oak][Oak] API and [authlete-deno][AuthleteDeno]
-library. oak is a web framework written in Deno and authlete-deno is another
+library. oak is a web framework for Deno and authlete-deno is another
 Authlete's open source library that provides basic components to communicate
 with [Authlete Web APIs][AuthleteAPI].
 

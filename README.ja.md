@@ -8,22 +8,22 @@ oak (Deno) 用 Authlete ライブラリ
 をサポートする認可サーバーと、リソースサーバーを実装するためのユーティリティー部品群を提供します。
 
 このライブラリは、oak API と authlete-deno ライブラリを用いて書かれています。
-[oak][Oak] は Deno で書かれた Web フレームワークの一つです。
+[oak][Oak] Deno 用の Web フレームワークの一つです。
 一方、[authlete-deno][AuthleteDeno] は Authlete が提供するもう一つのオープンソースライブラリで、
 [Authlete Web API][AuthleteAPI] とやりとりするための基本部品群を含んでいます。
 
 [Authlete][Authlete] は OAuth 2.0 と OpenID Connect の実装を提供するクラウドサービスです
-([overview][AuthleteOverview])。 認可データ (アクセストークン等) や認可サーバー自体の設定、
+([overview][AuthleteOverview])。認可データ (アクセストークン等) や認可サーバー自体の設定、
 クライアントアプリケーション群の設定はクラウド上の Authlete サーバーに保存されるため、
 Authlete を使うことで「DB レス」の認可サーバーを構築することができます。
 
 [deno-oak-oauth-server][DenoOakOauthServer] はこのライブラリを使用している認可サーバーの実装で、
 認可エンドポイントやトークンエンドポイントに加え、JWK Set エンドポイント、
 ディスカバリーエンドポイント、取り消しエンドポイントの実装を含んでいます。
-また、[deno-oak-resource-server][DenoOakResourceServer]
-はこのライブラリを使用しているリソースサーバーの実装です。 [OpenID Connect Core 1.0][OIDCCore]
-で定義されている[ユーザー情報エンドポイント][UserInfoEndpoint]
-をサポートし、また、保護リソースエンドポイントの例を含んでいます。
+また、[deno-oak-resource-server][DenoOakResourceServer] はこのライブラリを
+使用しているリソースサーバーの実装です。[OpenID Connect Core 1.0][OIDCCore]
+で定義されている[ユーザー情報エンドポイント][UserInfoEndpoint]をサポートし、
+また、保護リソースエンドポイントの例を含んでいます。
 あなたの認可サーバーおよびリソースサーバーの実装の開始点として、これらのサンプル実装を活用してください。
 
 ライセンス
