@@ -7,7 +7,7 @@ oak (Deno) 用 Authlete ライブラリ
 このライブラリは、[OAuth 2.0][RFC6749] および [OpenID Connect][OIDC]
 をサポートする認可サーバーと、リソースサーバーを実装するためのユーティリティー部品群を提供します。
 
-このライブラリは、oak API と authlete-go ライブラリを用いて書かれています。
+このライブラリは、oak API と authlete-deno ライブラリを用いて書かれています。
 [oak][Oak] は Deno で書かれた Web フレームワークの一つです。
 一方、[authlete-deno][AuthleteDeno] は Authlete が提供するもう一つのオープンソースライブラリで、
 [Authlete Web API][AuthleteAPI] とやりとりするための基本部品群を含んでいます。
