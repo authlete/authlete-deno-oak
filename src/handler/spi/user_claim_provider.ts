@@ -42,10 +42,10 @@ export interface UserClaimProvider
      *         of [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html)
      *         for details.
      *
-     * @return The value of the claim. The `Promise` resolves to `null`
-     *         if the value is not available. In most cases, it resolves
-     *         to a string value. When `claimName` is `"address"`, it
-     *         resolves to an instance of `Address` class.
+     * @return The value of the claim. `null` is returned if the value
+     *         is not available. In most cases, a string value is returned.
+     *         When `claimName` is `"address"`, an instance of `Address`
+     *         class is returned.
      */
     getUserClaimValue(subject: string, claimName: string, languageTag?: string): any;
 }

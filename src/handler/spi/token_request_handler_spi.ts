@@ -45,7 +45,7 @@ export interface TokenRequestHandlerSpi
      *
      * @returns The subject (= unique identifier) of the authenticated
      *          end-user. If the pair of `username` and `password` is
-     *          invalid, `null` should be returned from the promise.
+     *          invalid, `null` should be returned.
      */
     authenticateUser(
         username: string | null, password: string | null): string | null;
