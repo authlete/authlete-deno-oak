@@ -13,7 +13,8 @@
 // limitations under the License.
 
 
-import { Property } from 'https://deno.land/x/authlete_deno@v1.2.6/mod.ts';
+import { Property, TokenResponse } from 'https://deno.land/x/authlete_deno@v1.2.8/mod.ts';
+import { Context } from 'https://deno.land/x/oak@v10.2.0/mod.ts';
 
 
 /**
@@ -127,4 +128,51 @@ export interface TokenRequestHandlerSpi
      *          will not be associated.
      */
     getProperties(): Property[] | null;
+
+
+    /**
+     * Handle a token exchange request.
+     *
+     * This method is called when the grant type of the token request
+     * is `urn:ietf:params:oauth:grant-type:token-exchange`. The grant
+     * type is defined in [RFC 8693: OAuth 2.0 Token Exchange](https://www.rfc-editor.org/rfc/rfc8693.html).
+     *
+     * RFC 8693 is very flexible. In other words, the specification does
+     * not define details that are necessary for secure token exchange.
+     * Therefore, implementations have to complement the specification
+     * with their own rules.
+     *
+     * The second argument passed to this method is an instance of `TokenResponse`
+     * that represents a response from Authlete `/auth/token` API. The
+     * instance contains information about the token exchange request
+     * such as the value of the `subject_token` request parameter. Implementations
+     * of this `tokenExchange` method are supposed to (1) validate the
+     * information based on their own rules, (2) generate a token (e.g.
+     * an access token) using the information, and (3) prepare a token
+     * response in the JSON format that conforms to [Section 2.2](https://www.rfc-editor.org/rfc/rfc8693.html#section-2.2)
+     * of RFC 8693.
+     *
+     * Authlete `/auth/token` API performs validation of token exchange
+     * requests to some extent. Therefore, authorization server implementations
+     * don't have to repeat the same validation steps. See the [JavaDoc](https://authlete.github.io/authlete-java-common/)
+     * of the `TokenResponse` class for details about the validation steps.
+     *
+     * NOTE: Token Exchange is supported by Authlete 2.3 and newer versions.
+     * If the Authlete server of your system is older than version 2.3,
+     * the grant type (`urn:ietf:params:oauth:grant-type:token-exchange`)
+     * is not supported and so this method is never called.
+     *
+     * @param ctx
+     *         A context object.
+     *
+     * @param response
+     *         A response from Authlete `/auth/token` API.
+     *
+     * @return `true` to indicate that the implementation of this method
+     *         has prepared a token response. `false` to indicate that
+     *         the implementation of this method has done nothing. When
+     *         `false` is returned, `TokenReqHandler` will generate 400
+     *         Bad Request with `"error":"unsupported_grant_type"`.
+     */
+    tokenExchange(ctx: Context, response: TokenResponse): Promise<boolean>;
 }

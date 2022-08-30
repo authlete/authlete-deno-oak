@@ -53,7 +53,7 @@ export class ConfigurationRequestHandler extends BaseReqHandler
      * Handle a request to the configuration endpoint. This method calls
      * Authlete `/service/configuration` API.
      *
-     * @param context
+     * @param ctx
      *         A context object.
      *
      * @param pretty

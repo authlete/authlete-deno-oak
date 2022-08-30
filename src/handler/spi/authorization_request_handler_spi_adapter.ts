@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-import { Property } from 'https://deno.land/x/authlete_deno@v1.2.6/mod.ts';
+import { Property } from 'https://deno.land/x/authlete_deno@v1.2.8/mod.ts';
 import { AuthorizationRequestHandlerSpi } from './authorization_request_handler_spi.ts';
 import { UserClaimProviderAdapter } from './user_claim_provider_adapter.ts';
 

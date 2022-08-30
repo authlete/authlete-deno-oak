@@ -16,7 +16,7 @@
 import {
     AuthleteApi, isEmpty, isNotEmpty, stringfyJson, UserInfoIssueRequest,
     UserInfoIssueResponse, UserInfoRequest, UserInfoResponse
-} from 'https://deno.land/x/authlete_deno@v1.2.6/mod.ts';
+} from 'https://deno.land/x/authlete_deno@v1.2.8/mod.ts';
 import { Context } from 'https://deno.land/x/oak@v10.2.0/mod.ts';
 import {
     internalServerErrorOnApiCallFailure, okJson, okJwt, Status, wwwAuthenticate
@@ -40,12 +40,12 @@ const CHALLENGE_ON_MISSING_ACCESS_TOKEN =
 
 
 async function callUserInfo(
-    api: AuthleteApi, spi: UserInfoRequestHandlerSpi, ctx: Context, params: Params)
+    api: AuthleteApi, ctx: Context, params: Params): Promise<UserInfoResponse | void>
 {
     try
     {
         // Call Authlete '/auth/userinfo' API.
-        return await api.userInfo(await createUserInfoRequest(params));
+        return await api.userInfo(createUserInfoRequest(params));
     }
     catch(e)
     {
@@ -55,7 +55,7 @@ async function callUserInfo(
 }
 
 
-async function createUserInfoRequest(params: Params)
+function createUserInfoRequest(params: Params): UserInfoIssueRequest
 {
     // A request to Authlete /auth/userinfo API.
     const request = new UserInfoRequest();
@@ -72,7 +72,8 @@ async function createUserInfoRequest(params: Params)
 
 
 async function getUserInfo(
-    api: AuthleteApi, spi: UserInfoRequestHandlerSpi, ctx: Context, uir: UserInfoResponse)
+    api: AuthleteApi, spi: UserInfoRequestHandlerSpi, ctx: Context,
+    uir: UserInfoResponse): Promise<void>
 {
     // Call Authlete '/auth/userinfo/issue' API.
     const response = await callUserInfoIssue(api, spi, ctx, uir);
@@ -127,7 +128,7 @@ async function getUserInfo(
 
 async function callUserInfoIssue(
     api: AuthleteApi, spi: UserInfoRequestHandlerSpi, ctx: Context, uir: UserInfoResponse
-): Promise<UserInfoIssueResponse | undefined>
+): Promise<UserInfoIssueResponse | void>
 {
     try
     {
@@ -157,7 +158,7 @@ async function createUserInfoIssueRequest(
     if (isNotEmpty(sub)) request.sub = sub;
 
     // The claims of the end-user.
-    const claims = await new ClaimCollector(spi, uir.subject!, uir.claims).collect();
+    const claims = new ClaimCollector(spi, uir.subject!, uir.claims).collect();
     const stringClaims = stringfyJson(claims);
     if (isNotEmpty(stringClaims)) request.claims = stringClaims;
 
@@ -199,7 +200,7 @@ export class UserInfoRequestHandler extends BaseReqHandler
      * @param params
      *         Parameters for this handler.
      */
-    public async handle(ctx: Context, params: Params)
+    public async handle(ctx: Context, params: Params): Promise<void>
     {
         // Return a response of '400 Bad Request' if an access token is
         // not available.
@@ -210,7 +211,7 @@ export class UserInfoRequestHandler extends BaseReqHandler
         }
 
         // Call Authlete '/auth/userinfo' API.
-        const response = await callUserInfo(this.api, this.spi, ctx, params);
+        const response = await callUserInfo(this.api, ctx, params);
 
         if (!response)
         {
