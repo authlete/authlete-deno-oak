@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-import { AuthorizationResponse } from 'https://deno.land/x/authlete_deno@v1.2.6/mod.ts';
+import { AuthorizationResponse } from 'https://deno.land/x/authlete_deno@v1.2.8/mod.ts';
 import { Context } from 'https://deno.land/x/oak@v10.2.0/mod.ts';
 import { badRequest, internalServerError, location, okHtmlContent } from '../web/response_util.ts';
 import { BaseReqHandler, invalidAction, unknownAction } from './base_req_handler.ts';
@@ -46,7 +46,7 @@ export class AuthorizationRequestErrorHandler extends BaseReqHandler
      * @param response
      *         A response from Authlete `/auth/authorization` API.
      */
-    public async handle(ctx: Context, response: AuthorizationResponse): Promise<void>
+    public handle(ctx: Context, response: AuthorizationResponse): void
     {
         // Dispatch according to the action.
         switch (response.action)

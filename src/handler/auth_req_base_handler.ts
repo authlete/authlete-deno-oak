@@ -17,7 +17,7 @@ import {
     AuthleteApi, AuthorizationFailRequest, AuthorizationFailResponse,
     AuthorizationIssueRequest, AuthorizationIssueResponse, isNotEmpty,
     Property, stringfyJson
-} from 'https://deno.land/x/authlete_deno@v1.2.6/mod.ts';
+} from 'https://deno.land/x/authlete_deno@v1.2.8/mod.ts';
 import { Context } from 'https://deno.land/x/oak@v10.2.0/mod.ts';
 import {
     badRequest, internalServerError, internalServerErrorOnApiCallFailure,

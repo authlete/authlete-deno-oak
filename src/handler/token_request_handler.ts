@@ -16,7 +16,7 @@
 import {
     AuthleteApi, isNotEmpty, TokenFailRequest, TokenFailResponse,
     TokenIssueRequest, TokenIssueResponse, TokenRequest, TokenResponse
-} from 'https://deno.land/x/authlete_deno@v1.2.6/mod.ts';
+} from 'https://deno.land/x/authlete_deno@v1.2.8/mod.ts';
 import { Context } from 'https://deno.land/x/oak@v10.2.0/mod.ts';
 import {
     getFormParametersAsString, parseAuthorizationHeaderAsBasicCredentials
@@ -147,8 +147,7 @@ async function callTokenIssue(
     try
     {
         // Call Authlete '/auth/token/issue' API.
-        return await api.tokenIssue(
-            await createTokenIssueRequest(spi, ticket, subject));
+        return await api.tokenIssue(createTokenIssueRequest(spi, ticket, subject));
     }
     catch(e)
     {
@@ -158,9 +157,9 @@ async function callTokenIssue(
 }
 
 
-async function createTokenIssueRequest(
+function createTokenIssueRequest(
     spi: TokenRequestHandlerSpi, ticket: string, subject: string
-    ): Promise<TokenIssueRequest>
+    ): TokenIssueRequest
 {
     // A request to Authlete '/auth/token/issue' API.
     const request = new TokenIssueRequest();
@@ -215,7 +214,7 @@ async function tokenFail(
 
 async function callTokenFail(
     api: AuthleteApi, ctx: Context, ticket: string, reason: Reason
-    ): Promise<TokenFailResponse | undefined>
+    ): Promise<TokenFailResponse | void>
 {
     try
     {
@@ -230,7 +229,7 @@ async function callTokenFail(
 }
 
 
-function createTokenFailRequest(ticket: string, reason: Reason)
+function createTokenFailRequest(ticket: string, reason: Reason): TokenFailRequest
 {
     // Create a request to '/auth/token/fail' API.
     const request = new TokenFailRequest();
@@ -242,6 +241,32 @@ function createTokenFailRequest(ticket: string, reason: Reason)
     request.reason = reason;
 
     return request;
+}
+
+
+async function handleTokenExchange(
+    spi: TokenRequestHandlerSpi, ctx: Context, response: TokenResponse): Promise<void>
+{
+    const handled: boolean = await spi.tokenExchange(ctx, response);
+
+    if (!handled)
+    {
+        unsupportedGrantType(ctx);
+    }
+}
+
+
+function unsupportedGrantType(ctx: Context): void
+{
+    // Generate a token response that indicates that the grant type
+    // is not supported.
+    //
+    //     400 Bad Request
+    //     Content-Type: application/json
+    //
+    //     {"error":"unsupported_grant_type"}
+    //
+    badRequest(ctx, '{"error":"unsupported_grant_type"}');
 }
 
 
@@ -316,12 +341,16 @@ export class TokenRequestHandler extends BaseReqHandler
             case TrAction.PASSWORD:
                 // Process the token request whose flow is 'Resource Owner
                 // Password Credentials'.
-                handlePassword(this.api, this.spi, ctx, response);
+                await handlePassword(this.api, this.spi, ctx, response);
                 break;
 
             case TrAction.OK:
                 // 200 OK.
                 okJson(ctx, response.responseContent!);
+                break;
+
+            case TrAction.TOKEN_EXCHANGE:
+                await handleTokenExchange(this.spi, ctx, response);
                 break;
 
             default:
