@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-import { AuthleteApi } from 'https://deno.land/x/authlete_deno@v1.2.8/mod.ts';
+import { AuthleteApi } from 'https://deno.land/x/authlete_deno@v1.2.9/mod.ts';
 import { Context } from 'https://deno.land/x/oak@v10.2.0/mod.ts';
 import { internalServerError } from '../web/response_util.ts';
 
