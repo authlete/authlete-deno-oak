@@ -1,6 +1,13 @@
 CHANGES
 =======
 
+1.0.2 (2022-08-30)
+------------------
+
+- Add support for Token Exchange (RFC 8693).
+- Some bug fixes and other minor fixes.
+
+
 1.0.1 (2022-04-05)
 ------------------
 
