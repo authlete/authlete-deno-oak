@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-import { Property } from 'https://deno.land/x/authlete_deno@v1.2.9/mod.ts';
+import { Property } from 'https://deno.land/x/authlete_deno@v1.2.10/mod.ts';
 import { UserClaimProvider } from './user_claim_provider.ts';
 
 

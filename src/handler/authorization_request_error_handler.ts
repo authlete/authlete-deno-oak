@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-import { AuthorizationResponse } from 'https://deno.land/x/authlete_deno@v1.2.9/mod.ts';
+import { AuthorizationResponse } from 'https://deno.land/x/authlete_deno@v1.2.10/mod.ts';
 import { Context } from 'https://deno.land/x/oak@v10.2.0/mod.ts';
 import { badRequest, internalServerError, location, okHtmlContent } from '../web/response_util.ts';
 import { BaseReqHandler, invalidAction, unknownAction } from './base_req_handler.ts';
