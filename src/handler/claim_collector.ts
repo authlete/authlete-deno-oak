@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-import { isEmpty, isNotEmpty } from 'https://deno.land/x/authlete_deno@v1.2.9/mod.ts';
+import { isEmpty, isNotEmpty } from 'https://deno.land/x/authlete_deno@v1.2.10/mod.ts';
 import { UserClaimProvider } from './spi/user_claim_provider.ts';
 
 

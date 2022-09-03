@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-import { Property, TokenResponse } from 'https://deno.land/x/authlete_deno@v1.2.9/mod.ts';
+import { Property, TokenResponse } from 'https://deno.land/x/authlete_deno@v1.2.10/mod.ts';
 import { Context } from "https://deno.land/x/oak@v10.2.0/mod.ts";
 import { TokenRequestHandlerSpi } from './token_request_handler_spi.ts';
 
